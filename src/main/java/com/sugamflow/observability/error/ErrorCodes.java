@@ -10,6 +10,10 @@ public final class ErrorCodes {
     public static final String USER = "SF-USER-001";
     public static final String PAYMENT = "SF-PAYMENT-001";
     public static final String DOCTOR = "SF-DOCTOR-001";
+    public static final String APPOINTMENT = "SF-APPOINTMENT-001";
+    public static final String QUEUE = "SF-QUEUE-001";
+    public static final String IPD = "SF-IPD-001";
+    public static final String ACCOMMODATION = "SF-ACCOM-001";
     public static final String LAB = "SF-LAB-001";
     public static final String PHARMACY = "SF-PHARMACY-001";
     public static final String SUBSCRIPTION = "SF-SUBSCRIPTION-001";
