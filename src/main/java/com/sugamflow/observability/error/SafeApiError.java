@@ -9,19 +9,29 @@ import com.sugamflow.observability.mdc.MdcKeys;
 /** Safe client error — never include stack traces or internals. */
 public record SafeApiError(
         boolean success,
-        String code,
+        String errorCode,
         String message,
+        String referenceId,
         String traceId,
         String timestamp) {
 
     public static SafeApiError of(String code, String message) {
         String trace = firstNonBlank(MDC.get(MdcKeys.TRACE_ID), MDC.get(MdcKeys.REQUEST_ID));
+        String ref = ReferenceIds.currentOrCreate();
+        String resolvedCode = code != null && !code.isBlank() ? code : ErrorCodes.INTERNAL;
+        MDC.put(MdcKeys.ERROR_CODE, resolvedCode);
         return new SafeApiError(
                 false,
-                code != null ? code : "INTERNAL_SERVER_ERROR",
-                message != null ? message : "Unable to process your request.",
+                resolvedCode,
+                message != null && !message.isBlank() ? message : "Unable to process your request.",
+                ref,
                 trace,
                 Instant.now().toString());
+    }
+
+    /** Backward-compatible alias used by earlier callers. */
+    public String code() {
+        return errorCode;
     }
 
     private static String firstNonBlank(String a, String b) {

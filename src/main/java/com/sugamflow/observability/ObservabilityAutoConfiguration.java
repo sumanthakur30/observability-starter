@@ -15,6 +15,7 @@ import com.sugamflow.observability.jdbc.SlowQueryLogger;
 import com.sugamflow.observability.job.ScheduledJobSpan;
 import com.sugamflow.observability.log.AuditEventLogger;
 import com.sugamflow.observability.log.BusinessEventLogger;
+import com.sugamflow.observability.log.ExternalCallLogger;
 import com.sugamflow.observability.log.HttpAccessLogger;
 import com.sugamflow.observability.mdc.ObservabilityMdcFilter;
 
@@ -34,6 +35,11 @@ public class ObservabilityAutoConfiguration {
     @Bean
     public AuditEventLogger auditEventLogger() {
         return new AuditEventLogger();
+    }
+
+    @Bean
+    public ExternalCallLogger externalCallLogger() {
+        return new ExternalCallLogger();
     }
 
     @Bean

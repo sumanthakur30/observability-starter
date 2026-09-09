@@ -66,11 +66,14 @@ public class ObservabilityMdcFilter extends OncePerRequestFilter {
         put(MdcKeys.ENVIRONMENT, environment);
         put(MdcKeys.HTTP_METHOD, request.getMethod());
         put(MdcKeys.HTTP_PATH, request.getRequestURI());
+        put(MdcKeys.ENDPOINT, request.getRequestURI());
+        put(MdcKeys.REFERENCE_ID, com.sugamflow.observability.error.ReferenceIds.currentOrCreate());
 
         if (properties.isTenantContextEnabled()) {
             put(MdcKeys.TENANT_ID, request.getHeader("X-Tenant-Id"));
             put(MdcKeys.SHOP_ID, request.getHeader("X-Shop-Id"));
             put(MdcKeys.BRANCH_ID, request.getHeader("X-Branch-Id"));
+            put(MdcKeys.BUSINESS_TYPE, request.getHeader("X-Business-Type"));
             put(MdcKeys.USER_ID, firstNonBlank(request.getHeader("X-Auth-User"), request.getHeader("X-User-Id")));
             put(MdcKeys.ROLE, firstNonBlank(request.getHeader("X-Auth-Role"), request.getHeader("X-Role-Code")));
         }
